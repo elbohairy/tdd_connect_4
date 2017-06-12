@@ -9,14 +9,14 @@ class Board
 
 
   def display
-    @grid.members_by_column.each_pair do |column, memb_ary|
+    @grid.members_by_row.each_pair do |column, memb_ary|
       memb_ary.each do |member|
-        print "|_#{member.position}_|" 
+        print "|_#{member.symbol}_|" 
       end
       print "\n"
     end
-    @grid.columns.times do |x|
-      print "--#{x}--"
+    @grid.rows.times do |column_no|
+      print "--#{column_no}--"
     end
   end
 
@@ -35,7 +35,7 @@ class Square
 end
 
 class Grid
-  attr_accessor :members, :columns, :rows, :members_by_column
+  attr_accessor :members, :columns, :rows, :members_by_column, :members_by_row
 
   def initialize(rows, columns)
     @columns = columns
@@ -81,14 +81,11 @@ class Grid
   def create_grid(rows, columns)
     members = []
     rows.times do |ypos|
-#      column_members = []
       columns.times do |xpos|
         position = [xpos, ypos]
         square = Square.new(position)
         members.push square
- #       column_members.push square
       end
-  #    @members_by_column[ypos] = column_members
     end
 
     @members = members
@@ -97,15 +94,12 @@ class Grid
 end
 
 
-board2 = Board.new(Grid.new(1, 6))
+board2 = Board.new(Grid.new(7, 7))
 
 board2.display
 
 p board2.grid.members.sample.inspect
 
-board2.grid.members.each do |x|
-  puts x.position.inspect
-end
 
 #p board2.grid.members.each {|x| print x}
 
