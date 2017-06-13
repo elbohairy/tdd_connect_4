@@ -1,4 +1,6 @@
-
+# NOTE: for each row, there are column members. For each column, there are row members.
+# E.g., in a 4-by-6 grid, where there are 4 rows and 6 columns, each row has 6 members,
+# and each column has 4 members.
 
 class Board
   attr_accessor :grid
@@ -19,6 +21,18 @@ class Board
       print "--#{column_no}--"
     end
   end
+
+  def choose_move col_no
+    # thought I could reverse this earlier. It doesn't work.
+    col_no_squares = @grid.members_by_column[col_no].reverse
+    move = col_no_squares.find do |square|
+      square.symbol == ' '
+    end
+    move.symbol = 'X'
+    move
+  end
+
+
 
 
 end
@@ -98,7 +112,7 @@ board2 = Board.new(Grid.new(7, 7))
 
 board2.display
 
-p board2.grid.members.sample.inspect
+p board2.grid.members_by_column.keys
 
 
 #p board2.grid.members.each {|x| print x}

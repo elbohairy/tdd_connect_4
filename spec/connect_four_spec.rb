@@ -6,9 +6,6 @@ require './connect_four'
 # board should check win condition after each move
 
 
-# have been editing how grid is created so that it matches cartesian coords
-# better
-
 describe Board do
 
   describe "attributes" do
@@ -36,6 +33,24 @@ describe Board do
         ).to_stdout
       end
     end
+  end
+
+  describe '#choose_move column' do
+
+    let(:board3) do
+      board3 = Board.new(Grid.new(2,2))
+      board3
+    end
+
+    context "when column 0 is chosen and available" do
+      it "updates the first square in column 0 with player's symbol" do
+        expect(board3.choose_move(0).symbol).to eql('X')
+      end
+    end
+
+  end
+
+  describe '#update_grid' do
   end
 
 
