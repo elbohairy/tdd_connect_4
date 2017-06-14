@@ -48,11 +48,43 @@ describe Board do
       end
     end
 
+    context "when a column is chosen that is full" do
+      it "it returns 'Choose again.'" do
+        board3.choose_move(0)
+        board3.choose_move(0)
+        expect(board3.choose_move(0)).to eql('Choose again.')
+        #expect { board3.choose_move(0) }.to output('Choose again.').to_stdout
+      end
+    end
+
+
   end
 
   describe '#update_grid' do
   end
 
+  describe '#frontslash_win?' do
+
+    let(:board4) do
+      board4 = Board.new(Grid.new(6, 7))
+      board4.choose_move(1)
+      board4.choose_move(2)
+      board4.choose_move(2)
+      board4.choose_move(3)
+      board4.choose_move(3)
+      board4.choose_move(3)
+      board4.grid.find_by_loc([0,5]).symbol = 'O'
+      board4.grid.find_by_loc([1,4]).symbol = 'O'
+      board4.grid.find_by_loc([2,3]).symbol = 'O'
+      board4.grid.find_by_loc([3,2]).symbol = 'O'
+    end
+
+    context "when the board has a frontslash of four squares" do
+      it "returns 'You win!'" do
+        expect(board4.frontslash_win?).to eql("You win!")
+      end
+    end
+  end
 
 
 end
@@ -126,5 +158,18 @@ describe Grid do
       end
     end
   end
+
+  describe '#find_by_loc' do
+    let(:grid4) do
+      Grid.new(6,7)
+    end
+
+    context "when given the array [2,3]" do
+      it "returns the Square at position [2,3]" do
+        expect(grid4.find_by_loc([2,3]).position).to eql([2,3])
+      end
+    end
+  end
+
 end
 

@@ -3,7 +3,7 @@
 # and each column has 4 members.
 
 class Board
-  attr_accessor :grid
+  attr_accessor :grid, :latest_move
 
   def initialize(grid)
     @grid = grid
@@ -28,8 +28,19 @@ class Board
     move = col_no_squares.find do |square|
       square.symbol == ' '
     end
-    move.symbol = 'X'
-    move
+
+    if move
+      move.symbol = 'X'
+      @latest_move = move
+      return move
+    else
+      return "Choose again."
+    end
+
+  end
+
+  def frontslash_win?
+
   end
 
 
@@ -105,17 +116,61 @@ class Grid
     @members = members
   end
 
+  def find_by_loc(pos)
+    # testing helper
+    result = @members.find do |square|
+      square.position == pos
+    end
+
+    if result
+      result
+    end
+  end
+
+
+
 end
 
 
-board2 = Board.new(Grid.new(7, 7))
+board2 = Board.new(Grid.new(6, 7))
 
 board2.display
-
-p board2.grid.members_by_column.keys
-
-
+p "\n"
+board2.choose_move(0)
+p "\n"
+board2.display
+board2.choose_move(0)
+p "\n"
+board2.display
+board2.choose_move(0)
+p "\n"
+board2.display
+board2.choose_move(0)
+p "\n"
+board2.display
+board2.choose_move(0)
+p "\n"
+board2.display
+board2.choose_move(0)
+p "\n"
+board2.display
+p board2.choose_move(0)
 #p board2.grid.members.each {|x| print x}
 
 #p board2.grid.count_members_by_row
 
+p "HHHHHHHHHHHHHHHHHHHHHHHLOOOLLOL\n"
+
+board4 = Board.new(Grid.new(6, 7))
+board4.choose_move(1)
+board4.choose_move(2)
+board4.choose_move(2)
+board4.choose_move(3)
+board4.choose_move(3)
+board4.choose_move(3)
+board4.grid.find_by_loc([0,5]).symbol = 'O'
+board4.grid.find_by_loc([1,4]).symbol = 'O'
+board4.grid.find_by_loc([2,3]).symbol = 'O'
+board4.grid.find_by_loc([3,2]).symbol = 'O'
+
+p board4.display
