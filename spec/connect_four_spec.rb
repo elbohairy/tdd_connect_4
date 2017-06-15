@@ -169,6 +169,18 @@ describe Grid do
         expect(grid4.find_by_loc([2,3]).position).to eql([2,3])
       end
     end
+
+    context "when given the position [2,3] and the symbol X" do
+      it "returns the Square with the symbol at position [2,3]" do
+        grid4.find_by_loc([2,3]).symbol = 'X'
+        expect(grid4.find_by_loc([2,3], 'X').position).to eql([2,3])
+      end
+
+      it "returns nil when the Square doesn't have that symbol" do
+        grid4.find_by_loc([2,3]).symbol = 'X'
+        expect(grid4.find_by_loc([2,3], 'O')).to eql(nil)
+      end
+    end
   end
 
 end
