@@ -39,7 +39,24 @@ class Board
 
   end
 
-  def frontslash_win?
+  def frontslash_win? win_condition=[@latest_move]
+    if win_condition.length == 4
+      "You win!"
+    else
+      # this loc variable is a big problem. Think about when the latest move
+      # is between two valid squares. we push (should we push? shift?) the 
+      # two to the array, then we only look at the position of one of the two
+      # squares. We NEED to be looking at both squares, somehow.
+      loc = win_condition[0].position
+      up_and_right = @grid.find_by_loc [loc[0]+1, loc[1]-1]
+      down_and_left = @grid.find_by_loc [loc[0]-1, loc[1]+1]
+      if up_and_right and down_and_left
+        win_condition.push up_and_right
+        win_condition.push down_and_left
+        frontslash_win?
+      elsif up_and_right
+
+      elsif down_and_left
 
   end
 
@@ -124,6 +141,8 @@ class Grid
 
     if result
       result
+    else
+      nil
     end
   end
 
