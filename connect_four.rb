@@ -39,24 +39,40 @@ class Board
 
   end
 
-  # def frontslash_win? win_condition=[@latest_move]
-  #   if win_condition.length == 4
-  #     "You win!"
-  #   else
-  #     win_condition.each do |move|
-  #       loc = move.position
+  def frontslash_win? win_condition=[@latest_move]
+    # idea. collector/win condition, and another ary for checking new moves
+    cont = false
+    until win_condition.length >= 4 or cont
+      win_condition.each do |move|
+        print "#{move.symbol} and #{move.position}"
+        loc = move.position
 
-  #       up_and_right = @grid.find_by_loc [loc[0]+1, loc[1]-1]
-  #       down_and_left = @grid.find_by_loc [loc[0]-1, loc[1]+1]
-  #     if up_and_right and down_and_left
-  #       win_condition.push up_and_right
-  #       win_condition.push down_and_left
-  #       frontslash_win?
-  #     elsif up_and_right
+        up_and_right = @grid.find_by_loc [loc[0]+1, loc[1]-1], move.symbol
+        down_and_left = @grid.find_by_loc [loc[0]-1, loc[1]+1], move.symbol
+        if !win_condition.include? up_and_right and !win_condition.include? down_and_left and up_and_right and down_and_left
+          win_condition.push up_and_right
+          win_condition.push down_and_left
+            #frontslash_win? win_condition
+        elsif !win_condition.include? up_and_right and up_and_right
+          win_condition.push up_and_right
+          #frontslash_win? win_condition
+        elsif !win_condition.include? down_and_left and down_and_left
+          win_condition.push down_and_left
+          #frontslash_win? win_condition
+        else
+          cont = true
+        end
+      end
+    end
 
-  #     elsif down_and_left
+    if win_condition.length >= 4
+      return 'You win!'
+    elsif cont
+      return 'Boobs'
+    end
 
-  # end
+   
+  end
 
 
 
@@ -196,5 +212,8 @@ board4.grid.find_by_loc([0,5]).symbol = 'O'
 board4.grid.find_by_loc([1,4]).symbol = 'O'
 board4.grid.find_by_loc([2,3]).symbol = 'O'
 board4.grid.find_by_loc([3,2]).symbol = 'O'
+board4.latest_move = board4.grid.find_by_loc([3,2])
 
 p board4.display
+
+p board4.frontslash_win?

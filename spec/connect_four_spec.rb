@@ -77,11 +77,13 @@ describe Board do
       board4.grid.find_by_loc([1,4]).symbol = 'O'
       board4.grid.find_by_loc([2,3]).symbol = 'O'
       board4.grid.find_by_loc([3,2]).symbol = 'O'
+      board4.latest_move = board4.grid.find_by_loc([3,2])
+      board4
     end
 
     context "when the board has a frontslash of four squares" do
       it "returns 'You win!'" do
-        expect(board4.frontslash_win?).to eql("You win!")
+        expect( board4.frontslash_win? ).to eql("You win!")
       end
     end
   end
