@@ -41,34 +41,31 @@ class Board
 
   def frontslash_win? win_condition=[@latest_move]
     # idea. collector/win condition, and another ary for checking new moves
-    cont = false
-    until win_condition.length >= 4 or cont
+    neg = false
+    until win_condition.length >= 4 or neg
       win_condition.each do |move|
-        print "#{move.symbol} and #{move.position}"
         loc = move.position
 
         up_and_right = @grid.find_by_loc [loc[0]+1, loc[1]-1], move.symbol
         down_and_left = @grid.find_by_loc [loc[0]-1, loc[1]+1], move.symbol
-        if !win_condition.include? up_and_right and !win_condition.include? down_and_left and up_and_right and down_and_left
-          win_condition.push up_and_right
-          win_condition.push down_and_left
-            #frontslash_win? win_condition
+        if !win_condition.include? up_and_right and
+          !win_condition.include? down_and_left and up_and_right and down_and_left
+            win_condition.push up_and_right
+            win_condition.push down_and_left
         elsif !win_condition.include? up_and_right and up_and_right
           win_condition.push up_and_right
-          #frontslash_win? win_condition
         elsif !win_condition.include? down_and_left and down_and_left
           win_condition.push down_and_left
-          #frontslash_win? win_condition
         else
-          cont = true
+          neg = true
         end
       end
     end
 
     if win_condition.length >= 4
       return 'You win!'
-    elsif cont
-      return 'Boobs'
+    elsif neg
+      return false
     end
 
    

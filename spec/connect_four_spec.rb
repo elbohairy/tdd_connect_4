@@ -76,17 +76,111 @@ describe Board do
       board4.grid.find_by_loc([0,5]).symbol = 'O'
       board4.grid.find_by_loc([1,4]).symbol = 'O'
       board4.grid.find_by_loc([2,3]).symbol = 'O'
-      board4.grid.find_by_loc([3,2]).symbol = 'O'
-      board4.latest_move = board4.grid.find_by_loc([3,2])
       board4
     end
 
     context "when the board has a frontslash of four squares" do
       it "returns 'You win!'" do
+        board4.grid.find_by_loc([3,2]).symbol = 'O'
+        board4.latest_move = board4.grid.find_by_loc([3,2])
         expect( board4.frontslash_win? ).to eql("You win!")
       end
     end
+
+    context "when the board does NOT have a frontslash win" do
+      it "returns false" do
+        board4.grid.find_by_loc([3,2]).symbol = 'X'
+        board4.latest_move = board4.grid.find_by_loc([3,2])
+        expect( board4.frontslash_win? ).to eql(false)
+      end
+    end
   end
+
+  describe '#backslash_win?' do
+
+    let(:board5) do
+      board5 = Board.new(Grid.new(6, 7))
+      board5.choose_move(0)
+      board5.choose_move(0)
+      board5.choose_move(0)
+      board5.choose_move(1)
+      board5.choose_move(1)
+      board5.choose_move(2)
+      board5.grid.find_by_loc([0,3]).symbol = 'O'
+      board5.grid.find_by_loc([1,4]).symbol = 'O'
+      board5.grid.find_by_loc([3,6]).symbol = 'O'
+      board5
+    end
+
+    context "when the board has a backslash of four squares" do
+      it "returns 'You win!'" do
+        board5.grid.find_by_loc([2,5]).symbol = 'O'
+        board5.latest_move = board5.grid.find_by_loc([2,5])
+        expect( board5.backslash_win? ).to eql("You win!")
+      end
+    end
+
+    context "when the board does NOT have a frontslash win" do
+      it "returns false" do
+        board5.grid.find_by_loc([2,5]).symbol = 'X'
+        board5.latest_move = board5.grid.find_by_loc([2,5])
+        expect( board5.backslash_win? ).to eql(false)
+      end
+    end
+  end
+
+  describe '#vertical_win?' do
+
+    let(:board6) do
+      board6 = Board.new(Grid.new(6, 7))
+      board6.choose_move(1)
+      board6.choose_move(1)
+      board6.choose_move(1)
+      board6
+    end
+
+    context "when the board has a vertical stack of four squares" do
+      it "returns 'You win!'" do
+        board6.choose_move(1)
+        expect( board6.vertical_win? ).to eql("You win!")
+      end
+    end
+
+    context "when the board does NOT have a vertical win" do
+      it "returns false" do
+        board6.grid.find_by_loc([1,3]).symbol = 'O'
+        board6.latest_move = board6.grid.find_by_loc([1,3])
+        expect( board6.vertical_win? ).to eql(false)
+      end
+    end
+  end
+
+  describe '#horizontal_win?' do
+
+    let(:board7) do
+      board7 = Board.new(Grid.new(6, 7))
+      board7.choose_move(1)
+      board7.choose_move(2)
+      board7.choose_move(4)
+      board7
+    end
+
+    context "when the board has a horizontal row of four squares" do
+      it "returns 'You win!'" do
+        board7.choose_move(3)
+        expect( board7.horizontal_win? ).to eql("You win!")
+      end
+    end
+
+    context "when the board does NOT have a horizontal win" do
+      it "returns false" do
+        board7.grid.find_by_loc([3,6]).symbol = 'O'
+        board7.latest_move = board7.grid.find_by_loc([3,6])
+        expect( board7.horizontal_win? ).to eql(false)
+      end
+    end
+  end
+
 
 
 end
