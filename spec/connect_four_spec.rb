@@ -106,16 +106,16 @@ describe Board do
       board5.choose_move(1)
       board5.choose_move(1)
       board5.choose_move(2)
-      board5.grid.find_by_loc([0,3]).symbol = 'O'
-      board5.grid.find_by_loc([1,4]).symbol = 'O'
-      board5.grid.find_by_loc([3,6]).symbol = 'O'
+      board5.grid.find_by_loc([0,2]).symbol = 'O'
+      board5.grid.find_by_loc([1,3]).symbol = 'O'
+      board5.grid.find_by_loc([3,5]).symbol = 'O'
       board5
     end
 
     context "when the board has a backslash of four squares" do
       it "returns 'You win!'" do
-        board5.grid.find_by_loc([2,5]).symbol = 'O'
-        board5.latest_move = board5.grid.find_by_loc([2,5])
+        board5.grid.find_by_loc([2,4]).symbol = 'O'
+        board5.latest_move = board5.grid.find_by_loc([2,4])
         expect( board5.backslash_win? ).to eql("You win!")
       end
     end
@@ -174,8 +174,8 @@ describe Board do
 
     context "when the board does NOT have a horizontal win" do
       it "returns false" do
-        board7.grid.find_by_loc([3,6]).symbol = 'O'
-        board7.latest_move = board7.grid.find_by_loc([3,6])
+        board7.grid.find_by_loc([3,5]).symbol = 'O'
+        board7.latest_move = board7.grid.find_by_loc([3,5])
         expect( board7.horizontal_win? ).to eql(false)
       end
     end

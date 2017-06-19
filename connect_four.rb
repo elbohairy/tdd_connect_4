@@ -72,6 +72,97 @@ class Board
   end
 
 
+  def backslash_win? win_condition=[@latest_move]
+    # idea. collector/win condition, and another ary for checking new moves
+    neg = false
+    until win_condition.length >= 4 or neg
+      win_condition.each do |move|
+        loc = move.position
+
+        up_and_left = @grid.find_by_loc [loc[0]-1, loc[1]-1], move.symbol
+        down_and_right = @grid.find_by_loc [loc[0]+1, loc[1]+1], move.symbol
+        if !win_condition.include? up_and_left and
+          !win_condition.include? down_and_right and up_and_left and down_and_right
+            win_condition.push up_and_left
+            win_condition.push down_and_right
+        elsif !win_condition.include? up_and_left and up_and_left
+          win_condition.push up_and_left
+        elsif !win_condition.include? down_and_right and down_and_right
+          win_condition.push down_and_right
+        else
+          neg = true
+        end
+      end
+
+    end
+
+    if win_condition.length >= 4
+      return 'You win!'
+    elsif neg
+      return false
+    end
+
+   
+  end
+
+  def vertical_win? win_condition=[@latest_move]
+    # idea. collector/win condition, and another ary for checking new moves
+    neg = false
+    until win_condition.length >= 4 or neg
+      win_condition.each do |move|
+        loc = move.position
+        below = @grid.find_by_loc [loc[0], loc[1]+1], move.symbol
+
+        if !win_condition.include? below and below
+            win_condition.push below
+        else
+          neg = true
+        end
+      end
+
+    end
+
+    if win_condition.length >= 4
+      return 'You win!'
+    elsif neg
+      return false
+    end
+
+   
+  end
+
+  def horizontal_win? win_condition=[@latest_move]
+    # idea. collector/win condition, and another ary for checking new moves
+    neg = false
+    until win_condition.length >= 4 or neg
+      win_condition.each do |move|
+        loc = move.position
+
+        left = @grid.find_by_loc [loc[0]-1, loc[1]], move.symbol
+        right = @grid.find_by_loc [loc[0]+1, loc[1]], move.symbol
+        if !win_condition.include? left and
+          !win_condition.include? right and left and right
+            win_condition.push left
+            win_condition.push right
+        elsif !win_condition.include? left and left
+          win_condition.push left
+        elsif !win_condition.include? right and right
+          win_condition.push right
+        else
+          neg = true
+        end
+      end
+
+    end
+
+    if win_condition.length >= 4
+      return 'You win!'
+    elsif neg
+      return false
+    end
+
+   
+  end
 
 
 end
@@ -214,3 +305,39 @@ board4.latest_move = board4.grid.find_by_loc([3,2])
 p board4.display
 
 p board4.frontslash_win?
+
+p "BLAAAAAAAAH"
+
+board5 = Board.new(Grid.new(6, 7))
+board5.choose_move(0)
+board5.choose_move(0)
+board5.choose_move(0)
+board5.choose_move(1)
+board5.choose_move(1)
+board5.choose_move(2)
+board5.grid.find_by_loc([0,2]).symbol = 'O'
+board5.grid.find_by_loc([1,3]).symbol = 'O'
+board5.grid.find_by_loc([3,5]).symbol = 'O'
+board5
+
+p board5.display
+
+board5.grid.find_by_loc([2,4]).symbol = 'O'
+
+p board5.display
+board5.latest_move = board5.grid.find_by_loc([2,5])
+
+p board5.backslash_win?
+
+
+p "VERTICAL WANNNN"
+
+board6 = Board.new(Grid.new(6, 7))
+board6.choose_move(1)
+board6.choose_move(1)
+board6.choose_move(1)
+board6
+
+board6.choose_move(1)
+p board6.display
+p board6.vertical_win?
