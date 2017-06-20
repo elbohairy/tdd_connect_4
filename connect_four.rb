@@ -1,3 +1,14 @@
+# Completed. Some thoughts
+#   - testing is amazing. In a program this large, knowing your changes won't break 
+#   something or lead to unintentional behavior is so useful. Also means you don't
+#   need to keep the entirety of your program in your mind all the time; you can just
+#   focus on one part or the other, and be confident that the rest still works properly.
+#   - since testing is so great, it should probably be placed earlier in the curriculum.
+#   E.g., the bst and knight's travails projects would be so much easier with testing.
+#   - A few good opportunities for refactoring, and I don't have a tie condition, but overall
+#   this feels like the most polished, straightforward code I've ever created, and it's
+#   all thanks to TDD/testing! YAY
+
 # NOTE: for each row, there are column members. For each column, there are row members.
 # E.g., in a 4-by-6 grid, where there are 4 rows and 6 columns, each row has 6 members,
 # and each column has 4 members.
@@ -36,8 +47,8 @@ class Board
     else
       return "Choose again."
     end
-
   end
+
 
   def frontslash_win? win_condition=[@latest_move]
     neg = false
@@ -62,12 +73,11 @@ class Board
     end
 
     if win_condition.length >= 4
-      return 'You win!'
+      return true
     elsif neg
       return false
     end
 
-   
   end
 
 
@@ -95,13 +105,13 @@ class Board
     end
 
     if win_condition.length >= 4
-      return 'You win!'
+      return true
     elsif neg
       return false
     end
 
-   
   end
+
 
   def vertical_win? win_condition=[@latest_move]
     neg = false
@@ -120,13 +130,13 @@ class Board
     end
 
     if win_condition.length >= 4
-      return 'You win!'
+      return true
     elsif neg
       return false
     end
 
-   
   end
+
 
   def horizontal_win? win_condition=[@latest_move]
     neg = false
@@ -152,12 +162,55 @@ class Board
     end
 
     if win_condition.length >= 4
-      return 'You win!'
+      return true
     elsif neg
       return false
     end
 
-   
+  end
+
+
+  def players
+    puts "\nPlayer 1, give me your name"
+    name1 = gets.chomp
+    puts "And the symbol you would like to use to represent your squares"
+    symb1 = gets.chomp
+    puts "Same thing, player 2. What is your name?"
+    name2 = gets.chomp
+    puts "And symbol"
+    symb2 = gets.chomp
+    puts "Thank you"
+    player1 = Player.new(name1, symb1)
+    player2 = Player.new(name2, symb2)
+
+    [player1, player2]
+  end
+
+
+  def play
+    player_ary = players
+    win = false 
+
+    display
+    until win
+      puts "\nChoose a column, player 1"
+      col = [0,1,2,3,4,5,6].sample
+      choose_move col, player_ary[0].symbol
+      display
+
+      puts "\nChoose a column, player 2"
+      col = [0,1,2,3,4,5,6].sample
+      choose_move col, player_ary[1].symbol
+      display
+
+      if frontslash_win? or backslash_win? or vertical_win? or horizontal_win?
+        win = true
+      end
+
+    end
+
+
+    return 'You win!'
   end
 
 
@@ -353,3 +406,5 @@ board2 = Board.new(Grid.new(5, 6))
 board2
 
 board2.display
+
+#board2.play

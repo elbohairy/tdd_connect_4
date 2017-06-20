@@ -86,7 +86,7 @@ describe Board do
       it "returns 'You win!'" do
         board4.grid.find_by_loc([3,2]).symbol = 'O'
         board4.latest_move = board4.grid.find_by_loc([3,2])
-        expect( board4.frontslash_win? ).to eql("You win!")
+        expect( board4.frontslash_win? ).to eql(true)
       end
     end
 
@@ -116,10 +116,10 @@ describe Board do
     end
 
     context "when the board has a backslash of four squares" do
-      it "returns 'You win!'" do
+      it "returns 'true'" do
         board5.grid.find_by_loc([2,4]).symbol = 'O'
         board5.latest_move = board5.grid.find_by_loc([2,4])
-        expect( board5.backslash_win? ).to eql("You win!")
+        expect( board5.backslash_win? ).to eql(true)
       end
     end
 
@@ -143,9 +143,9 @@ describe Board do
     end
 
     context "when the board has a vertical stack of four squares" do
-      it "returns 'You win!'" do
+      it "returns 'true'" do
         board6.choose_move(1)
-        expect( board6.vertical_win? ).to eql("You win!")
+        expect( board6.vertical_win? ).to eql(true)
       end
     end
 
@@ -169,9 +169,9 @@ describe Board do
     end
 
     context "when the board has a horizontal row of four squares" do
-      it "returns 'You win!'" do
+      it "returns 'true'" do
         board7.choose_move(3)
-        expect( board7.horizontal_win? ).to eql("You win!")
+        expect( board7.horizontal_win? ).to eql(true)
       end
     end
 
@@ -183,6 +183,23 @@ describe Board do
       end
     end
   end
+
+
+  describe "#play" do
+    let(:board8) do
+      board8 = Board.new(Grid.new(6,7))
+    end
+
+    context "when someone wins" do
+      it "returns 'You win!'" do
+        allow(board8).to receive(:gets) {['a', 'b', 'c','d'].sample}
+        expect( board8.play ).to eql("You win!")
+      end
+    end
+  end
+
+  #describe ""
+
 
 
 
