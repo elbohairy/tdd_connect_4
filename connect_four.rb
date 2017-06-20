@@ -22,7 +22,7 @@ class Board
     end
   end
 
-  def choose_move col_no
+  def choose_move col_no, symb='X'
     # thought I could reverse this earlier. It doesn't work.
     col_no_squares = @grid.members_by_column[col_no].reverse
     move = col_no_squares.find do |square|
@@ -30,7 +30,7 @@ class Board
     end
 
     if move
-      move.symbol = 'X'
+      move.symbol = symb
       @latest_move = move
       return move
     else
