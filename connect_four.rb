@@ -17,7 +17,7 @@ class Board
       end
       print "\n"
     end
-    @grid.rows.times do |column_no|
+    @grid.columns.times.each do |column_no|
       print "--#{column_no}--"
     end
   end
@@ -40,7 +40,6 @@ class Board
   end
 
   def frontslash_win? win_condition=[@latest_move]
-    # idea. collector/win condition, and another ary for checking new moves
     neg = false
     until win_condition.length >= 4 or neg
       win_condition.each do |move|
@@ -73,7 +72,6 @@ class Board
 
 
   def backslash_win? win_condition=[@latest_move]
-    # idea. collector/win condition, and another ary for checking new moves
     neg = false
     until win_condition.length >= 4 or neg
       win_condition.each do |move|
@@ -106,7 +104,6 @@ class Board
   end
 
   def vertical_win? win_condition=[@latest_move]
-    # idea. collector/win condition, and another ary for checking new moves
     neg = false
     until win_condition.length >= 4 or neg
       win_condition.each do |move|
@@ -132,7 +129,6 @@ class Board
   end
 
   def horizontal_win? win_condition=[@latest_move]
-    # idea. collector/win condition, and another ary for checking new moves
     neg = false
     until win_condition.length >= 4 or neg
       win_condition.each do |move|
@@ -259,6 +255,15 @@ class Grid
 
 end
 
+class Player
+  attr_accessor :name, :symbol
+
+  def initialize(name, symbol)
+    @name = name
+    @symbol = symbol
+  end
+end
+
 
 board2 = Board.new(Grid.new(6, 7))
 
@@ -302,7 +307,7 @@ board4.grid.find_by_loc([2,3]).symbol = 'O'
 board4.grid.find_by_loc([3,2]).symbol = 'O'
 board4.latest_move = board4.grid.find_by_loc([3,2])
 
-p board4.display
+board4.display
 
 p board4.frontslash_win?
 
@@ -341,3 +346,10 @@ board6
 board6.choose_move(1)
 p board6.display
 p board6.vertical_win?
+
+
+p "weird"
+board2 = Board.new(Grid.new(5, 6))
+board2
+
+board2.display

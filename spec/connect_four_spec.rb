@@ -4,6 +4,9 @@ require './connect_four'
 # board should allow player to make moves
 # board should update
 # board should check win condition after each move
+# Player class with name and symbol
+# edit choose move
+# loop until 'you win'
 
 
 describe Board do
@@ -29,7 +32,7 @@ describe Board do
         expect { board2.display }.to output(
 """|_ _||_ _||_ _||_ _||_ _||_ _|\n|_ _||_ _||_ _||_ _||_ _||_ _|
 |_ _||_ _||_ _||_ _||_ _||_ _|\n|_ _||_ _||_ _||_ _||_ _||_ _|
-|_ _||_ _||_ _||_ _||_ _||_ _|\n--0----1----2----3----4--"""
+|_ _||_ _||_ _||_ _||_ _||_ _|\n--0----1----2----3----4----5--"""
         ).to_stdout
       end
     end
@@ -281,3 +284,17 @@ describe Grid do
 
 end
 
+
+describe Player do
+  describe 'attributes' do
+
+    subject do
+      Player.new("Johnny", '%')
+    end
+
+    it { is_expected.to respond_to(:name) }
+    it { is_expected.to respond_to(:symbol) }
+
+  end
+
+end
